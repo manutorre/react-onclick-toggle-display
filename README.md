@@ -4,8 +4,6 @@
 [![npm package][npm-badge]][npm]
 [![Coverage Status](https://coveralls.io/repos/github/manutorre/react-onclick-toggle-display/badge.svg?branch=master)](https://coveralls.io/github/manutorre/react-onclick-toggle-display?branch=master)
 
-Describe react-onclick-toggle-display here.
-
 [build-badge]: https://img.shields.io/travis/user/repo/master.png?style=flat-square
 [build]: https://travis-ci.org/user/repo
 
