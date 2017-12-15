@@ -35,7 +35,10 @@
   "author": "",
   "homepage": "",
   "license": "MIT",
-  "repository": "",
+  "repository" :
+    { "type" : "git",
+      "url" : "https://github.com/manutorre/react-onclick-toggle-display.git"
+    },
   "keywords": [
     "react-component"
   ]
