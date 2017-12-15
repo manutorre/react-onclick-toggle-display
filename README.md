@@ -1,8 +1,8 @@
 # react-onclick-toggle-display
 
-[![Travis][build-badge]][build]
+[![Build Status](https://travis-ci.org/manutorre/react-onclick-toggle-display.svg?branch=master)](https://travis-ci.org/manutorre/react-onclick-toggle-display)
 [![npm package][npm-badge]][npm]
-[![Coveralls][coveralls-badge]][coveralls]
+[![Coverage Status](https://coveralls.io/repos/github/manutorre/react-onclick-toggle-display/badge.svg?branch=master)](https://coveralls.io/github/manutorre/react-onclick-toggle-display?branch=master)
 
 Describe react-onclick-toggle-display here.
 
