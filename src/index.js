@@ -1,9 +1,8 @@
 import React from 'react'
 import Proptypes from 'prop-types'
 
-export default class OnClickToggleDisplay extends React.Component{
-
-  /*This components is useful for showing some content whenever you want.
+export default class OnClickToggleDisplay extends React.Component {
+  /* This components is useful for showing some content whenever you want.
    If only the required props are passed, the content will close if you click outside of It.
     props ->
       openerNode: is the node that onClick opens up the node passed by the content prop. It is required
@@ -16,28 +15,26 @@ export default class OnClickToggleDisplay extends React.Component{
       onOpening: expects a function that will be fired when content is shown
   */
 
-
-	constructor(props){
-		super(props)
-		this.state = {
-			show:false
-		}
-    //this binding is for keeping the component context and calling refs, props, state...
+  constructor (props) {
+    super(props)
+    this.state = {
+      show: false
+    }
+    // this binding is for keeping the component context and calling refs, props, state...
     this.checkClickLocation = this.checkClickLocation.bind(this)
-	}
+  }
 
-	toggleClickListener(){
-    if (!this.state.show){
-      document.addEventListener('click', this.checkClickLocation, false);
+  toggleClickListener () {
+    if (!this.state.show) {
+      document.addEventListener('click', this.checkClickLocation, false)
+    } else {
+      document.removeEventListener('click', this.checkClickLocation, false)
     }
-    else{
-      document.removeEventListener('click', this.checkClickLocation, false);
-    }
-	}
+  }
 
-  toggleAeroPopover(){
+  toggleAeroPopover () {
     if (this.props.onOpening && !this.state.show) {
-      this.props.onOpening();
+      this.props.onOpening()
     }
     this.toggleClickListener()
     this.setState({
@@ -45,77 +42,70 @@ export default class OnClickToggleDisplay extends React.Component{
     })
   }
 
-  checkClickLocation(e){ //fires on every click when popover is open.
-    if (!this.checkCloseFromInsideElement(e.target) && //if user did not click in any closeFromInsideElements passed as prop
-       ((this.refs.popover && this.refs.popover.contains(e.target)) || //checks if is clicking inside of content
+  checkClickLocation (e) { // fires on every click when popover is open.
+    if (!this.checkCloseFromInsideElement(e.target) && // if user did not click in any closeFromInsideElements passed as prop
+       ((this.refs.popover && this.refs.popover.contains(e.target)) || // checks if is clicking inside of content
          this.checkPreventCloseNodes(e.target) ||
-         this.checkPreventInsideOfNodes(e.target)))
-       {
-         return;
-       }
-    this.toggleAeroPopover();
+         this.checkPreventInsideOfNodes(e.target))) {
+      return
+    }
+    this.toggleAeroPopover()
   }
 
-  checkPreventInsideOfNodes(target){ //you can pass as prop all the ids you want to check if you clicked inside
+  checkPreventInsideOfNodes (target) { // you can pass as prop all the ids you want to check if you clicked inside
     if (!this.props.preventInsideOfElements) {
       return false
     }
-    return this.props.preventInsideOfElements.some( (idOrClass) => {
+    return this.props.preventInsideOfElements.some((idOrClass) => {
       const elementToCheck = document.getElementById(idOrClass) ? document.getElementById(idOrClass) : document.getElementsByClassName(idOrClass)[0]
       return (elementToCheck && elementToCheck.contains(target))
     })
   }
 
-
-  checkPreventCloseNodes(target){ //you can pass as prop all the ids you want the popover prevent from closing
-    if (!target.id && !target.className || !this.props.preventFromCloseElements){
+  checkPreventCloseNodes (target) { // you can pass as prop all the ids you want the popover prevent from closing
+    if ((!target.id && !target.className) || !this.props.preventFromCloseElements) {
       return false
-    }
-    else{
+    } else {
       const targetElement = target.id ? target.id : target.className
       return this.props.preventFromCloseElements.some((idOrClass) => {
-        return targetElement == idOrClass
+        return targetElement === idOrClass
       })
     }
   }
 
-
-  checkCloseFromInsideElement(target){
-    if ((!target.id && !target.className) || !this.props.closeFromInsideElements){
+  checkCloseFromInsideElement (target) {
+    if ((!target.id && !target.className) || !this.props.closeFromInsideElements) {
       return false
-    }
-    else{
+    } else {
       const targetElement = target.id ? target.id : target.className
       return this.props.closeFromInsideElements.some((idOrClass) => {
-        return targetElement == idOrClass
+        return targetElement === idOrClass
       })
     }
   }
 
-
-  componentWillUnmount(){
+  componentWillUnmount () {
     document.removeEventListener('click', this.checkClickLocation, false)
   }
 
-	render(){
-		const openerClass= this.state.show ? "open-content" : ""
-		return (
-			<div className={this.props.containerClass || ""}>
-				<div ref="popover">
-					{this.state.show && this.props.children}
-				</div>
-				<div ref="openerNode" onClick={() => this.toggleAeroPopover()} className={openerClass}>
-					{this.props.openerNode}
-				</div>
-			</div>
-		)
-	}
-
+  render () {
+    const openerClass = this.state.show ? 'open-content' : ''
+    return (
+      <div className={this.props.containerClass || ''}>
+        <div ref="popover">
+          {this.state.show && this.props.children}
+        </div>
+        <div ref="openerNode" onClick={() => this.toggleAeroPopover()} className={openerClass}>
+          {this.props.openerNode}
+        </div>
+      </div>
+    )
+  }
 }
 
 OnClickToggleDisplay.propTypes = {
-	openerNode:Proptypes.node.isRequired,
-	preventFromCloseElements: Proptypes.arrayOf(Proptypes.string),
+  openerNode: Proptypes.node.isRequired,
+  preventFromCloseElements: Proptypes.arrayOf(Proptypes.string),
   preventInsideOfElements: Proptypes.arrayOf(Proptypes.string),
-  closeFromInsideElements: Proptypes.arrayOf(Proptypes.string),
+  closeFromInsideElements: Proptypes.arrayOf(Proptypes.string)
 }
