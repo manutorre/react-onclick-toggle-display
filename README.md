@@ -32,6 +32,8 @@ For installing this component:
 npm install react-onclick-toggle-display
 ```
 
+### Props and explanation
+
 | Prop | how It works | kind |
 | :---         |     :---:      |    :---:      |  
 | openerNode (required)   | Node that will work as a button. If you click this node, the content will be shown     | Node |
