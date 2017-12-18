@@ -1,6 +1,6 @@
 {
   "name": "react-onclick-toggle-display",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "OnClickToggleDisplay React component",
   "main": "lib/index.js",
   "module": "es/index.js",
