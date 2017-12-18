@@ -14,7 +14,7 @@
 [coveralls]: https://coveralls.io/github/user/repo
 
 
-Wrap content with this component and toggle It depending on click's location
+Wrap content with this component and toggle It depending on click's location.
 
 ## Getting Started
 
