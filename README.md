@@ -24,7 +24,7 @@ The children components of <OnClickToggleDisplay> will not be shown unless you p
 The openerNode prop is the button (It can be any kind of react component actually) that will make the children component display. This button will be shown by default.
 Once the children component is shown, OnClickToggleDisplay will detect the user's click and if the click is outside the children components, then the content will be hidden. If the user clicks inside the children component, then It will keep being displayed.
 
-### Prerequisites
+### Installation
 
 For installing this component:
 
@@ -36,6 +36,6 @@ npm install react-onclick-toggle-display
 | :---         |     :---:      |    :---:      |  
 | openerNode (required)   | Node that will work as a button. If you click this node, the content will be shown     | Node |
 | preventFromCloseElements     | You should pass an array of strings. When the user clicks on a node with one of these, then the content will not hide (even if It is outside the children component)        | Array |
-| preventInsideOfElements   | Just like preventFromCloseElements. However, also contained nodes of those with a certain id or class won't hide the content     | Array |
+| preventInsideOfElements   | Just like preventFromCloseElements. However, also contained nodes of those with a certain id or class won't hide the content when clicked inside     | Array |
 | closeFromInsideElements | You should pass an array of strings. When the user clicks on a node with one of these, then the content will hide (even if It is inside the children component)        | Array |
 | onOpening | function to be fired when the content is shown | Array |
