@@ -1,20 +1,20 @@
 import React from 'react'
 import Proptypes from 'prop-types'
 
-export default class OnClickToggleDisplay extends React.Component {
-  /* This components is useful for showing some content whenever you want.
-   If only the required props are passed, the content will close if you click outside of It.
-    props ->
-      openerNode: is the node that onClick opens up the node passed by the content prop. It is required
-      preventFromCloseElements: It's an array of strings. each string represents an Id or a ClassName. If you click on an element with one of these strings
-        as id or class, the popover will not close (event if It is outside the popover)
-      preventInsideOfElements: works like preventFromCloseElements. The important difference is that if you click on an element that is INSIDE an element with
-        any of the strings passed as id or class, then It will not close (even if It is not outside the popover)
-      closeFromInsideElements: It's an array of strings. As It's name suggests, if you click on an element with class or id that is the same as one of the
-        strings passed, then the popover will hide
-      onOpening: expects a function that will be fired when content is shown
-  */
+/* This components is useful for showing some content whenever you want.
+If only the required props are passed, the content will close if you click outside of It.
+props ->
+openerNode: is the node that onClick opens up the node passed by the content prop. It is required
+preventFromCloseElements: It's an array of strings. each string represents an Id or a ClassName. If you click on an element with one of these strings
+as id or class, the popover will not close (event if It is outside the popover)
+preventInsideOfElements: works like preventFromCloseElements. The important difference is that if you click on an element that is INSIDE an element with
+any of the strings passed as id or class, then It will not close (even if It is not outside the popover)
+closeFromInsideElements: It's an array of strings. As It's name suggests, if you click on an element with class or id that is the same as one of the
+strings passed, then the popover will hide
+onOpening: expects a function that will be fired when content is shown
+*/
 
+export default class OnClickToggleDisplay extends React.Component {
   constructor (props) {
     super(props)
     this.state = {
