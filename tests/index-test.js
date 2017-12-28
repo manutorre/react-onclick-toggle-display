@@ -144,7 +144,10 @@ describe('Showing content', () => {
       ReactDOM.render(
         (<div className="wrapper">
           <div className="outside">Outside content</div>
-          <OnClickToggleDisplay openerNode={<a className="opener">boton</a>} preventInsideOfElements={['wrapper']}>
+          <OnClickToggleDisplay openerNode={<a className="opener">boton</a>}
+           preventFromCloseElements={['wrapper']}
+           checkInnerNodes={true}
+           >
             <div className="content">Test</div>
           </OnClickToggleDisplay>);
         </div>), document.body)
@@ -157,7 +160,11 @@ describe('Showing content', () => {
       ReactDOM.render(
         (<div id="wrapper">
           <div className="outside">Outside content</div>
-          <OnClickToggleDisplay openerNode={<a className="opener">boton</a>} preventInsideOfElements={['wrapper']}>
+          <OnClickToggleDisplay
+            openerNode={<a className="opener">boton</a>}
+            preventFromCloseElements={['wrapper']}
+            checkInnerNodes={true}
+          >
             <div className="content">Test</div>
           </OnClickToggleDisplay>);
         </div>), document.body)

@@ -46,17 +46,17 @@ export default class OnClickToggleDisplay extends React.Component {
     if (!this.checkCloseFromInsideElement(e.target) && // if user did not click in any closeFromInsideElements passed as prop
        ((this.refs.popover && this.refs.popover.contains(e.target)) || // checks if is clicking inside of content
          this.checkPreventCloseNodes(e.target) ||
-         this.checkPreventInsideOfNodes(e.target))) {
+         this.checkInnerNodes(e.target))) {
       return
     }
     this.toggleAeroPopover()
   }
 
-  checkPreventInsideOfNodes (target) { // you can pass as prop all the ids you want to check if you clicked inside
-    if (!this.props.preventInsideOfElements) {
+  checkInnerNodes (target) { // you can pass as prop all the ids you want to check if you clicked inside
+    if (!this.props.checkInnerNodes) {
       return false
     }
-    return this.props.preventInsideOfElements.some((idOrClass) => {
+    return this.props.preventFromCloseElements.some((idOrClass) => {
       const elementToCheck = document.getElementById(idOrClass) ? document.getElementById(idOrClass) : document.getElementsByClassName(idOrClass)[0]
       return (elementToCheck && elementToCheck.contains(target))
     })
