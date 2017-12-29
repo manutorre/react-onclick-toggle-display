@@ -19,11 +19,19 @@ beforeEach(() => {
 
 describe('Hiding content', () => {
   it('does not render inner content by default', () => {
-    expect(render(<OnClickToggleDisplay openerNode={(<a>boton</a>)}><div>Test</div></OnClickToggleDisplay>)).toExclude('<div>Test</div>')
+    expect(render(
+      <OnClickToggleDisplay
+       openerNode={(<a>boton</a>)}><div>Test</div>
+     </OnClickToggleDisplay>))
+     .toExclude('<div>Test</div>')
   })
 
   it('Hides content when openerNode is not provided', () => {
-    expect(render(<OnClickToggleDisplay><div>Test</div></OnClickToggleDisplay>)).toExclude('Test')
+    expect(render(
+      <OnClickToggleDisplay>
+        <div>Test</div>
+      </OnClickToggleDisplay>))
+      .toExclude('Test')
   })
 
 
@@ -44,7 +52,9 @@ describe('Hiding content', () => {
     ReactDOM.render(
       (<div className="wrapper">
         <div className="outside">Outside content</div>
-        <OnClickToggleDisplay openerNode={<a className="opener">boton</a>}>
+        <OnClickToggleDisplay
+          openerNode={<a className="opener">boton</a>}
+        >
           <div className="content">Test</div>
         </OnClickToggleDisplay>);
       </div>), document.body)
@@ -57,7 +67,10 @@ describe('Hiding content', () => {
     ReactDOM.render(
       (<div className="wrapper">
         <div className="outside">Outside content</div>
-        <OnClickToggleDisplay openerNode={<a className="opener">boton</a>} closeFromInsideElements={["closer-button"]}>
+        <OnClickToggleDisplay
+          openerNode={<a className="opener">boton</a>}
+          closeFromInsideElements={["closer-button"]}
+        >
           <div className="content">
             <a className="closer-button">button</a>
             <span>Test</span>
@@ -73,7 +86,10 @@ describe('Hiding content', () => {
     ReactDOM.render(
       (<div className="wrapper">
         <div className="outside">Outside content</div>
-        <OnClickToggleDisplay openerNode={<a className="opener">boton</a>} closeFromInsideElements={["closer-button"]}>
+        <OnClickToggleDisplay
+          openerNode={<a className="opener">boton</a>}
+          closeFromInsideElements={["closer-button"]}
+        >
           <div className="content">
             <a id="closer-button">button</a>
             <span>Test</span>
@@ -89,7 +105,10 @@ describe('Hiding content', () => {
     ReactDOM.render(
       (<div className="wrapper">
         <div className="outside">Outside content</div>
-        <OnClickToggleDisplay openerNode={<a className="opener">boton</a>} preventFromCloseElements={['wrapper']}>
+        <OnClickToggleDisplay
+          openerNode={<a className="opener">boton</a>}
+          preventFromCloseElements={['wrapper']}
+        >
           <div className="content">Test</div>
         </OnClickToggleDisplay>);
       </div>), document.body)
@@ -106,7 +125,9 @@ describe('Hiding content', () => {
 describe('Showing content', () => {
   it('Shows inside content when opener node is clicked', () => {
     const wrapper = shallow(
-      <OnClickToggleDisplay openerNode={<a className="opener">boton</a>}>
+      <OnClickToggleDisplay
+         openerNode={<a className="opener">boton</a>}
+      >
         <div>Test</div>
       </OnClickToggleDisplay>);
       wrapper.find('.opener').parent().simulate('click');
@@ -117,7 +138,9 @@ describe('Showing content', () => {
       ReactDOM.render(
         (<div className="wrapper">
           <div className="outside">Outside content</div>
-          <OnClickToggleDisplay openerNode={<a className="opener">boton</a>}>
+          <OnClickToggleDisplay
+            openerNode={<a className="opener">boton</a>}
+          >
             <div className="content">Test</div>
           </OnClickToggleDisplay>);
         </div>), document.body)
@@ -130,7 +153,10 @@ describe('Showing content', () => {
       ReactDOM.render(
         (<div id="wrapper">
           <div className="outside">Outside content</div>
-          <OnClickToggleDisplay openerNode={<a className="opener">boton</a>} preventFromCloseElements={['outside','wrapper']}>
+          <OnClickToggleDisplay
+            openerNode={<a className="opener">boton</a>}
+            preventFromCloseElements={['outside','wrapper']}
+          >
             <div className="content">Test</div>
           </OnClickToggleDisplay>);
         </div>), document.body)
@@ -140,7 +166,7 @@ describe('Showing content', () => {
       expect(document.getElementsByClassName("content")[0]).toExist() ;
     });
 
-    it('Clicking at outer nodes inside of nodes with class passed as preventFromCloseElements wont hide the content', () => { //Enzyme's shallow rendering event handler's works with components "onClick" props... so could not use It here
+    it('Clicking at inner nodes from preventFromCloseElements when checkInnerNodes is true wont hide the content', () => { //Enzyme's shallow rendering event handler's works with components "onClick" props... so could not use It here
       ReactDOM.render(
         (<div className="wrapper">
           <div className="outside">Outside content</div>
@@ -189,6 +215,7 @@ describe('Showing content', () => {
         wrapper.find('.opener').parent().simulate('click');
         sinon.assert.called(spied);
       })
+
       it('adds the open class to the opener node', () => {
         const boton = <a className="opener">boton</a>
         const content = <div>Test</div>

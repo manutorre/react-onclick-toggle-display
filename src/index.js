@@ -7,8 +7,7 @@ props ->
 openerNode: is the node that onClick opens up the node passed by the content prop. It is required
 preventFromCloseElements: It's an array of strings. each string represents an Id or a ClassName. If you click on an element with one of these strings
 as id or class, the popover will not close (event if It is outside the popover)
-preventInsideOfElements: works like preventFromCloseElements. The important difference is that if you click on an element that is INSIDE an element with
-any of the strings passed as id or class, then It will not close (even if It is not outside the popover)
+checkInnerNodes: Will also check and prevent from closing content if is clicked at a node that is inside a preventFromCloseElement
 closeFromInsideElements: It's an array of strings. As It's name suggests, if you click on an element with class or id that is the same as one of the
 strings passed, then the popover will hide
 onOpening: expects a function that will be fired when content is shown
@@ -44,25 +43,21 @@ export default class OnClickToggleDisplay extends React.Component {
 
   checkClickLocation (e) { // fires on every click when popover is open.
     if (!this.checkCloseFromInsideElement(e.target) && // if user did not click in any closeFromInsideElements passed as prop
-       ((this.refs.popover && this.refs.popover.contains(e.target)) || // checks if is clicking inside of content
-         this.checkPreventCloseNodes(e.target) ||
-         this.checkInnerNodes(e.target))) {
+       this.checkClickInsideOfContent(e.target) || this.checkOuterNodes(e.target)) {
       return
     }
     this.toggleAeroPopover()
   }
 
-  checkInnerNodes (target) { // you can pass as prop all the ids you want to check if you clicked inside
-    if (!this.props.checkInnerNodes) {
-      return false
-    }
-    return this.props.preventFromCloseElements.some((idOrClass) => {
-      const elementToCheck = document.getElementById(idOrClass) ? document.getElementById(idOrClass) : document.getElementsByClassName(idOrClass)[0]
-      return (elementToCheck && elementToCheck.contains(target))
-    })
+
+  checkClickInsideOfContent(target){
+    return this.refs.popover && this.refs.popover.contains(target)
   }
 
-  checkPreventCloseNodes (target) { // you can pass as prop all the ids you want the popover prevent from closing
+  checkOuterNodes (target) { // you can pass as prop all the ids you want the popover prevent from closing
+    if (this.props.checkInnerNodes) {
+      return this.checkInnerNodes(target)
+    }
     if ((!target.id && !target.className) || !this.props.preventFromCloseElements) {
       return false
     } else {
@@ -71,6 +66,13 @@ export default class OnClickToggleDisplay extends React.Component {
         return targetElement === idOrClass
       })
     }
+  }
+
+  checkInnerNodes (target) { // if checkInnerNodes prop is passed, then preventFromCloseElements inner nodes will prevent from closing
+    return this.props.preventFromCloseElements.some((idOrClass) => {
+      const elementToCheck = document.getElementById(idOrClass) ? document.getElementById(idOrClass) : document.getElementsByClassName(idOrClass)[0]
+      return (elementToCheck && elementToCheck.contains(target))
+    })
   }
 
   checkCloseFromInsideElement (target) {
@@ -105,7 +107,7 @@ export default class OnClickToggleDisplay extends React.Component {
 
 OnClickToggleDisplay.propTypes = {
   openerNode: Proptypes.node.isRequired,
-  preventFromCloseElements: Proptypes.arrayOf(Proptypes.string),
+  checkInnerNodes: Proptypes.bool,
   preventInsideOfElements: Proptypes.arrayOf(Proptypes.string),
   closeFromInsideElements: Proptypes.arrayOf(Proptypes.string)
 }
